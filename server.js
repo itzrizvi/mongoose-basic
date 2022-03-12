@@ -13,12 +13,19 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+let Schema = mongoose.Schema;
+let UserSchema = new Schema({
+    firstName: String,
+    lastName: String,
+    phoneNumber: String
+});
+
+let UserModel = mongoose.model('USER', UserSchema);
+
 
 // SERVER ROOT
 app.get('/', (req, res) => {
-    res.json({
-        message: 'Welcome'
-    });
+
 })
 
 // MONGOOSE CONNECT
