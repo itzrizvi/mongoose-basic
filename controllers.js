@@ -8,7 +8,7 @@ exports.getAllContact = (req, res) => {
         })
         .catch(err => {
             console.log(err);
-        })
+        });
 };
 
 exports.getSingleContact = (req, res) => {
@@ -19,7 +19,7 @@ exports.getSingleContact = (req, res) => {
         })
         .catch(err => {
             console.log(err);
-        })
+        });
 };
 
 exports.createContact = (req, res) => {
@@ -63,7 +63,7 @@ exports.updateContact = (req, res) => {
         })
         .catch(err => {
             console.log(err);
-        })
+        });
 
 };
 
@@ -76,5 +76,5 @@ exports.deleteContact = (req, res) => {
         })
         .catch(err => {
             console.log(err);
-        })
+        });
 };
