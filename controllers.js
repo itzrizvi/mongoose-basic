@@ -68,5 +68,13 @@ exports.updateContact = (req, res) => {
 };
 
 exports.deleteContact = (req, res) => {
+    let { id } = req.params;
 
+    User.findOneAndDelete({ _id: id })
+        .then(user => {
+            res.json(user);
+        })
+        .catch(err => {
+            console.log(err);
+        })
 };
