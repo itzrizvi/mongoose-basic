@@ -6,8 +6,6 @@ require('dotenv').config();
 // Routers
 const router = require('./routes');
 
-
-
 const app = express(); // APP
 const PORT = process.env.PORT || 5000; // PORT 
 
@@ -17,16 +15,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use('/users', router);
-
-let Schema = mongoose.Schema;
-let UserSchema = new Schema({
-    firstName: String,
-    lastName: String,
-    phoneNumber: String
-});
-
-let UserModel = mongoose.model('USER', UserSchema);
-
 
 // SERVER ROOT
 app.get('/', (req, res) => {
@@ -40,6 +28,7 @@ mongoose
         // SERVER LISTEN
         app.listen(PORT, () => {
             console.log(`SERVER IS RUNNING ON PORT : ${PORT}`);
+            console.log('DB CONNECTED');
         });
     })
     .catch(error => {
