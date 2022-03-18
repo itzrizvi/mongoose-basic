@@ -21,9 +21,9 @@ app.get('/', (req, res) => {
 
 })
 
+
 // MONGOOSE CONNECT
-mongoose
-    .connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.w9ewo.mongodb.net/test`, { useNewUrlParser: true })
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.w9ewo.mongodb.net/test?retryWrites=true&w=majority`, { useNewUrlParser: true })
     .then(() => {
         // SERVER LISTEN
         app.listen(PORT, () => {

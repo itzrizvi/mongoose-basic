@@ -18,10 +18,16 @@ exports.createContact = (req, res) => {
         phoneNumber
     });
     console.log(user);
-    res.json({
-        message: 'User Is Created Sucessfully!'
-    })
-
+    user.save()
+        .then(callb => {
+            res.json(callb);
+        })
+        .catch(err => {
+            console.log(err);
+            res.json({
+                message: 'Error Occured!'
+            });
+        });
 };
 
 exports.updateContact = (req, res) => {
