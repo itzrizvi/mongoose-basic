@@ -9,6 +9,9 @@ const router = require('./routes');
 const app = express(); // APP
 const PORT = process.env.PORT || 5000; // PORT 
 
+// VIEW ENGINE SET
+app.set('view engine', 'ejs');
+
 // MIDDLE WARES
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
