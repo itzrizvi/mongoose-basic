@@ -4,7 +4,7 @@ const User = require('./User');
 exports.getAllUsers = (req, res) => {
     User.find()
         .then(users => {
-            res.render('index', { users });
+            res.render('index', { users, error: {} });
         })
         .catch(err => {
             console.log(err);
@@ -24,20 +24,49 @@ exports.getSingleUser = (req, res) => {
 
 exports.createUser = (req, res) => {
     let { firstName, lastName, email, phoneNumber } = req.body;
+    let error = {}
+    if (!firstName || !lastName) {
+        error.name = 'Please Provide Your Full Name'
+    }
+    if (!email) {
+        error.email = 'Please Provide Your Email'
+    }
+    if (!phoneNumber) {
+        error.phone = 'Please Provide Your Phone Number'
+    }
+
+    let isError = Object.keys(error).length > 0;
+
+    if (isError) {
+        User.find()
+            .then(users => {
+                return res.render('index', { users, error });
+            })
+            .catch(err => {
+                console.log(err);
+                return res.json({
+                    message: 'Error Occured!'
+                });
+            });
+    }
+
     let user = new User({
         firstName,
         lastName,
         email,
         phoneNumber
     });
-    console.log(user);
+
     user.save()
         .then(callb => {
-            res.json(callb);
+            User.find()
+                .then(users => {
+                    res.render('index', { users, error: {} })
+                })
         })
         .catch(err => {
             console.log(err);
-            res.json({
+            return res.json({
                 message: 'Error Occured!'
             });
         });
