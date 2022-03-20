@@ -1,17 +1,17 @@
 const User = require('./User');
 
 
-exports.getAllContact = (req, res) => {
+exports.getAllUsers = (req, res) => {
     User.find()
         .then(users => {
-            res.json(users);
+            res.render('index', { users });
         })
         .catch(err => {
             console.log(err);
         });
 };
 
-exports.getSingleContact = (req, res) => {
+exports.getSingleUser = (req, res) => {
     let { id } = req.params;
     User.findById(id)
         .then(user => {
@@ -22,7 +22,7 @@ exports.getSingleContact = (req, res) => {
         });
 };
 
-exports.createContact = (req, res) => {
+exports.createUser = (req, res) => {
     let { firstName, lastName, email, phoneNumber } = req.body;
     let user = new User({
         firstName,
@@ -43,7 +43,7 @@ exports.createContact = (req, res) => {
         });
 };
 
-exports.updateContact = (req, res) => {
+exports.updateUser = (req, res) => {
     let { firstName, lastName, email, phoneNumber } = req.body;
     let { id } = req.params;
 
@@ -67,7 +67,7 @@ exports.updateContact = (req, res) => {
 
 };
 
-exports.deleteContact = (req, res) => {
+exports.deleteUser = (req, res) => {
     let { id } = req.params;
 
     User.findOneAndDelete({ _id: id })
