@@ -23,7 +23,7 @@ exports.getSingleUser = (req, res) => {
 };
 
 exports.createUser = (req, res) => {
-    let { firstName, lastName, email, phoneNumber } = req.body;
+    let { firstName, lastName, email, id, phoneNumber } = req.body;
     let error = {}
     if (!firstName || !lastName) {
         error.name = 'Please Provide Your Full Name'
@@ -57,19 +57,39 @@ exports.createUser = (req, res) => {
         phoneNumber
     });
 
-    user.save()
-        .then(callb => {
+    if (id) {
+        User.findOneAndUpdate({
+            _id: id
+        }, {
+            $set: {
+                firstName, lastName, email, phoneNumber
+            }
+        }).then(() => {
             User.find()
                 .then(users => {
-                    res.render('index', { users, error: {} })
+                    res.render('index', { users, error: {} });
                 })
-        })
-        .catch(err => {
+        }).catch(err => {
             console.log(err);
             return res.json({
                 message: 'Error Occured!'
             });
-        });
+        })
+    } else {
+        user.save()
+            .then(callb => {
+                User.find()
+                    .then(users => {
+                        res.render('index', { users, error: {} })
+                    })
+            })
+            .catch(err => {
+                console.log(err);
+                return res.json({
+                    message: 'Error Occured!'
+                });
+            });
+    }
 };
 
 exports.updateUser = (req, res) => {
