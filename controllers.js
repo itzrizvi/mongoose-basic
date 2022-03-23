@@ -100,8 +100,11 @@ exports.deleteUser = (req, res) => {
     let { id } = req.params;
 
     User.findOneAndDelete({ _id: id })
-        .then(user => {
-            res.json(user);
+        .then(() => {
+            User.find()
+                .then(users => {
+                    res.render('index', { users, error: {} });
+                })
         })
         .catch(err => {
             console.log(err);
