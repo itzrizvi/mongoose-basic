@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Contacts App</title>
+    <title>User App</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,8 +16,8 @@
 
     <div class="container">
         <div class="my-4">
-            <h4>Create New Contacts</h4>
-            <form action="/users" class="form-inline" method="POST">
+            <h4>Create New User</h4>
+            <form action="/users" class="form-inline" method="POST" id="user-form">
                 <div class="form-group mr-3">
                     <input type="text" name="firstName" placeholder="First Name..."
                         class="form-control <%= error.name ? 'is-invalid' : ''%>">
@@ -78,7 +78,9 @@
                                 <%= user.phoneNumber %>
                             </td>
                             <td>
-                                <button class="btn btn-warning btn-sm">
+                                <button class="btn btn-warning btn-sm edit-btn" data-first="<%= user.firstName %>"
+                                    data-last="<%= user.lastName %>" data-phone="<%= user.phoneNumber %>"
+                                    data-email="<%= user.email %>" data-id="<%= user._id %>">
                                     Edit
                                 </button>
                                 <a href="users/delete/<%= user._id %>" class="btn btn-danger btn-sm">
@@ -103,6 +105,25 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
+    <script>
+        window.onload = function () {
+            let editBtns = document.getElementsByClassName('edit-btn');
+            let userForm = document.getElementById('user-form');
+            [...editBtns].forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    let { first, last, email, phone, id } = e.target.dataset;
+                    userForm[0].value = first;
+                    userForm[1].value = last;
+                    userForm[2].value = email;
+                    userForm[3].value = phone;
+                    userForm[4].value = id;
+                    userForm[5].value = 'Update';
+
+                });
+            });
+        }
+    </script>
 </body>
 
 </html>
